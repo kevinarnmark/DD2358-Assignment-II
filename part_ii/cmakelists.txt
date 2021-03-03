@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.1)
+
+project(DD2358-Assignment-2 VERSION 1.0
+                        DESCRIPTION "Part 2"
+                        LANGUAGES C Fortran)
+
+include(GNUInstallDirs)
+
+set(CMAKE_C_COMPILER gcc)
+enable_language(Fortran)
+
+add_library(matrix SHARED matrix.c)
+
+add_executable(gemm_test.out gemm_test.f90)
+
+set_target_properties(gemm_test.out
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "lib/"
+    LIBRARY_OUTPUT_DIRECTORY "lib/"
+    RUNTIME_OUTPUT_DIRECTORY "bin/"
+)
+
+target_link_libraries(gemm_test.out PUBLIC matrix)
+
+target_include_directories(gemm_test.out PUBLIC "${PROJECT_BINARY_DIR}")
+
+install(TARGETS matrix
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+install(TARGETS gemm_test.out DESTINATION bin) 
