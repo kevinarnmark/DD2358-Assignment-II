@@ -16,6 +16,7 @@ $ python3 run_matrix.py
 ```
 
 **Requirements**
-Python 3.8.5
-numpy
-Installed libmatrix.so (Part 2)
+
+* Python 3.8.5
+* numpy
+* Installed libmatrix.so (Part 2)
