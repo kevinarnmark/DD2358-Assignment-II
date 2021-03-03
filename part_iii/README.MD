@@ -1,6 +1,6 @@
 Part 3
 ======
-To build the python module matrixpy either run ./make.sh or enter the following commands:
+To build the python module matrixpy (could not get it to work with the name matrix) either run ./make.sh or enter the following commands:
 
 ```
 $ mkdir build
