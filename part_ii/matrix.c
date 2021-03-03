@@ -1,6 +1,5 @@
 #include "matrix.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 void matmul(int *n_ptr, double *c, double *a, double *b) {
 	int n = *n_ptr;
