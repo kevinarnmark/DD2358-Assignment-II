@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.4)
+project(Python-Matrix LANGUAGES CXX)
+
+add_subdirectory(pybind11)
+pybind11_add_module(matrixpy matrixpy.cpp)
+
+find_library(MATRIX_LIBRARY
+  NAMES matrix
+  HINTS .
+)
+
+if (MATRIX_LIBRARY)
+  target_link_libraries(matrixpy PRIVATE ${MATRIX_LIBRARY})
+else()
+  message(FATAL_ERROR "Cannot find libmatrix.so")
+endif()
+
+target_compile_options(matrixpy PRIVATE -g -Wall -O3)
+
+target_compile_definitions(matrixpy PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
