@@ -90,24 +90,6 @@ program gemm_test
       write(*,*) 'Controll resulting matrix D using fortran matrix multiplication: ',''
       write(*,*) 'D: ', D%data
 contains
-        subroutine matmult_test()
-                use matrix
-                implicit none
-
-                type(matrix_t) :: A, B, C
-      
-                call A%init(10, 10)
-                call B%init(10, 10)
-                call C%init(10, 10)
-                A%data = 1.0
-                B%data = 1.5
-                write(*,*) 'A: ', A%data
-                write(*,*) 'B: ', B%data
-                write(*,*) 'C: ', C%data
-                C = A * B
-                write(*,*) 'C: ', C%data
-        end subroutine
-
         function matrix_multiplication(A, B) result(C)
                 use matrix
                 type(matrix_t), intent(in) :: A
