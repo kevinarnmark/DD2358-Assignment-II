@@ -4,6 +4,7 @@ To build the python module matrixpy either run ./make.sh or enter the following 
 
 ```
 $ mkdir build
+$ cp run_matrix.py build
 $ cd build
 $ cmake ..
 $ make
