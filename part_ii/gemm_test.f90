@@ -47,7 +47,6 @@ contains
         end subroutine matrix_free
 
         function c_matmult(A, B) result(C)
-                !use, intrinsic :: iso_c_binding, only: c_double, c_int, c_loc, c_ptr
                 use matmult
                 use iso_fortran_env, only : real64
                 implicit none
