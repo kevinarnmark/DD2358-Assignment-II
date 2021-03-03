@@ -46,23 +46,6 @@ contains
                 A%d(2) = 0
         end subroutine matrix_free
 
-        function matrix_multiplication(A, B) result(C)
-                type(matrix_t), intent(in) :: A
-                type(matrix_t), intent(in) :: B
-                type(matrix_t) :: C
-                integer :: i, j, k
-
-                call C%init(A%d(1), B%d(2)) 
-                
-                iloop: do i = 1, C%d(1)
-                        jloop: do j = 1, C%d(2)
-                                kloop: do k = 1, A%d(2)
-                                        C%data(i, j) = C%data(i,j) + A%data(i, k) * B%data(k, j)
-                                end do kloop
-                        end do jloop
-                end do iloop
-        end function matrix_multiplication
-
         function c_matmult(A, B) result(C)
                 !use, intrinsic :: iso_c_binding, only: c_double, c_int, c_loc, c_ptr
                 use matmult
@@ -85,10 +68,11 @@ end module matrix
 program gemm_test
       use matrix
       implicit none
-      type(matrix_t) :: A, B, C
+      type(matrix_t) :: A, B, C, D
       call A%init(2, 2)
       call B%init(2, 2)
       call C%init(2, 2)
+      call D%init(2, 2)
       A%data(1,1) = 1.0
       A%data(1,2) = 4.0
       A%data(2,1) = 2.0
@@ -103,7 +87,9 @@ program gemm_test
       write(*,*) 'C: ', C%data
       C = A * B
       write(*,*) 'C: ', C%data
-
+      D = matrix_multiplication(A, B)
+      write(*,*) 'Controll resulting matrix D using fortran matrix multiplication: ',''
+      write(*,*) 'D: ', D%data
 contains
         subroutine matmult_test()
                 use matrix
@@ -121,6 +107,24 @@ contains
                 write(*,*) 'C: ', C%data
                 C = A * B
                 write(*,*) 'C: ', C%data
-end subroutine
+        end subroutine
+
+        function matrix_multiplication(A, B) result(C)
+                use matrix
+                type(matrix_t), intent(in) :: A
+                type(matrix_t), intent(in) :: B
+                type(matrix_t) :: C
+                integer :: i, j, k
+
+                call C%init(A%d(1), B%d(2)) 
+                
+                iloop: do i = 1, C%d(1)
+                        jloop: do j = 1, C%d(2)
+                                kloop: do k = 1, A%d(2)
+                                        C%data(i, j) = C%data(i,j) + A%data(i, k) * B%data(k, j)
+                                end do kloop
+                        end do jloop
+                end do iloop
+        end function matrix_multiplication
 
 end program gemm_test
